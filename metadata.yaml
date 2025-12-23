@@ -130,6 +130,7 @@ spec:
       - cloudresourcemanager.googleapis.com
       - iam.googleapis.com
       - ids.googleapis.com
+      - storage-api.googleapis.com
       - servicenetworking.googleapis.com
       - serviceusage.googleapis.com
       - compute.googleapis.com
