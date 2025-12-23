@@ -50,7 +50,7 @@ variable "subnet_list" {
 variable "tag_list" {
   type        = list(string)
   description = "Tag list to monitor with Cloud IDS"
-  default     = null
+  default     = ["allow-all"]
 }
 
 variable "threat_exceptions" {
