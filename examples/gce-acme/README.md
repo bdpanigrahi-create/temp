@@ -73,3 +73,24 @@ terraform apply
 ```
 terraform destroy
 ```
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| acme\_email | Email to send ACME renewal notifications to. | `any` | n/a | yes |
+| acme\_server | ACME API server, set to https://acme-staging-v02.api.letsencrypt.org/directory to use the staging API. | `string` | `"https://acme-v02.api.letsencrypt.org/directory"` | no |
+| name | Name used for the endpoint and when creating resources like the network and compute\_instance. | `string` | `"tf-ep-dns"` | no |
+| region | Region to configure the provider and create resources in. | `string` | `"us-central1"` | no |
+| zone | Zone to create resources like the subnetwork and compute\_instance. | `string` | `"us-central1-c"` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| endpoint | n/a |
+| external\_ip | n/a |
+| ssh | n/a |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

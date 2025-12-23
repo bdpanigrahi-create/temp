@@ -1,0 +1,62 @@
+# Copyright 2025 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: blueprints.cloud.google.com/v1alpha1
+kind: BlueprintMetadata
+metadata:
+  name: temp
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  info:
+    title: Cloud Endpoints DNS Module for Terraform
+    source:
+      repo: https://github.com/bdpanigrahi-create/temp.git
+      sourceType: git
+    version: 3.0.1
+    actuationTool:
+      flavor: Terraform
+      version: ">= 0.13"
+    description: {}
+  content:
+    examples:
+      - name: gce-acme
+        location: examples/gce-acme
+  interfaces:
+    variables:
+      - name: project
+        description: Project to create the Cloud Endpoint service in. If not given, the default provider is used.
+        defaultValue: ""
+      - name: name
+        description: "Name of the cloud endpoints service. This will create a DNS record in the form of: NAME.endpoints.PROJECT.cloud.goog"
+        required: true
+      - name: external_ip
+        description: External IP the endpoint will point to.
+        required: true
+      - name: ensure_undelete
+        description: Run gcloud command before creating cloud endpoint to force undelete of service endpoint. If endpoint has recently been deleted, it cannot be re-created without first undeleting it.
+        defaultValue: true
+    outputs:
+      - name: config_id
+        description: The rollout config ID for the endpoint service.
+      - name: endpoint
+        description: "The name of the DNS record conventional to the Cloud Endpoints format of: NAME.endpoints.PROJECT.cloud.goog. Not dependent on google_endpoints_service resource."
+      - name: endpoint_computed
+        description: The address of the cloud endpoint. This is computed from the google_endpoints_service resource and can be used to create dependencies between resources.
+      - name: external_ip
+        description: The value of the external IP the endpoint points to.
+      - name: name
+        description: Name of the cloud endpoints service.
+      - name: project
+        description: The project where the cloud endpoint was created.

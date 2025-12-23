@@ -27,3 +27,26 @@ module "cloud-ep-dns" {
   external_ip = "${google_compute_instance.default.network_interface.0.access_config.0.assigned_nat_ip}"
 }
 ```
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| ensure\_undelete | Run gcloud command before creating cloud endpoint to force undelete of service endpoint. If endpoint has recently been deleted, it cannot be re-created without first undeleting it. | `bool` | `true` | no |
+| external\_ip | External IP the endpoint will point to. | `any` | n/a | yes |
+| name | Name of the cloud endpoints service. This will create a DNS record in the form of: NAME.endpoints.PROJECT.cloud.goog | `any` | n/a | yes |
+| project | Project to create the Cloud Endpoint service in. If not given, the default provider is used. | `string` | `""` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| config\_id | The rollout config ID for the endpoint service. |
+| endpoint | The name of the DNS record conventional to the Cloud Endpoints format of: NAME.endpoints.PROJECT.cloud.goog. Not dependent on google\_endpoints\_service resource. |
+| endpoint\_computed | The address of the cloud endpoint. This is computed from the google\_endpoints\_service resource and can be used to create dependencies between resources. |
+| external\_ip | The value of the external IP the endpoint points to. |
+| name | Name of the cloud endpoints service. |
+| project | The project where the cloud endpoint was created. |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
