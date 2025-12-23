@@ -38,12 +38,15 @@ spec:
       - name: project
         description: Project to create the Cloud Endpoint service in. If not given, the default provider is used.
         required: true
+        defaultValue: "adcfood4"
       - name: name
         description: "Name of the cloud endpoints service. This will create a DNS record in the form of: NAME.endpoints.PROJECT.cloud.goog"
         required: true
+        defaultValue: "gemini-test"
       - name: external_ip
         description: External IP the endpoint will point to.
         required: true
+        defaultValue: "35.223.66.55"
       - name: ensure_undelete
         description: Run gcloud command before creating cloud endpoint to force undelete of service endpoint. If endpoint has recently been deleted, it cannot be re-created without first undeleting it.
         defaultValue: true
