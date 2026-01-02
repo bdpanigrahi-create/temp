@@ -148,6 +148,19 @@ spec:
   requirements:
     roles:
       - level: Project
+        roles:
+          - roles/compute.admin
+          - roles/iam.serviceAccountUser
+          - roles/iam.serviceAccountAdmin
+          - roles/resourcemanager.projectIamAdmin
+    services:
+      - cloudresourcemanager.googleapis.com
+      - storage-api.googleapis.com
+      - serviceusage.googleapis.com
+      - compute.googleapis.com
+      - iap.googleapis.com
+      - iam.googleapis.com
+      - iamcredentials.googleapis.com
     providerVersions:
       - source: hashicorp/google
         version: ">= 3.53, < 6"
