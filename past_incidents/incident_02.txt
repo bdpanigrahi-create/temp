@@ -1,0 +1,17 @@
+Incident ID: INC-20260503-2
+Title: Memory Leak in Billing Processor due to Unclosed DB Cursors
+Date: 2026-05-03
+Severity: HIGH
+
+Symptom:
+The billing processor service experienced Out of Memory (OOM) crashes approximately every 6 hours, disrupting scheduled billing runs.
+
+Root Cause Analysis (RCA):
+A recent refactor in the transaction processing loop missed closing database cursors in an edge case error branch. These cursors held references to large result sets in memory, preventing the garbage collector from reclaiming space.
+
+Remediation Steps:
+Short-term:
+Increased the instance memory size as a temporary measure and set up a cron job to restart the service every 4 hours.
+
+Long-term:
+Refactored the database interaction code to strictly use context managers ('with' statements) ensuring cursors are closed automatically. Added memory leak regression tests.

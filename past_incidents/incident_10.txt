@@ -1,0 +1,17 @@
+Incident ID: INC-20260519-10
+Title: Distributed Deadlock in Inventory Management
+Date: 2026-05-19
+Severity: HIGH
+
+Symptom:
+Inventory updates hanging, resulting in timeouts and failed orders during peak hours.
+
+Root Cause Analysis (RCA):
+Two services (Order Service and Inventory Service) were acquiring locks on 'Product' and 'Warehouse' resources in reverse order. Service A locked Product then Warehouse; Service B locked Warehouse then Product, causing a classic distributed deadlock.
+
+Remediation Steps:
+Short-term:
+Restarted the deadlocked service instances to release the held locks.
+
+Long-term:
+Enforced a strict resource locking order across all services and implemented lock timeouts to prevent indefinite hangs.

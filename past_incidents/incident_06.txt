@@ -1,0 +1,17 @@
+Incident ID: INC-20260511-6
+Title: Outage due to Expired SSL Certificate on Load Balancer
+Date: 2026-05-11
+Severity: CRITICAL
+
+Symptom:
+Users unable to access the application, receiving 'Connection not secure' warnings in their browsers.
+
+Root Cause Analysis (RCA):
+The automated renewal script for the Let's Encrypt certificate failed because the HTTP-01 challenge path was blocked by a new routing rule deployed the previous week, which redirected all traffic to a maintenance page during a window.
+
+Remediation Steps:
+Short-term:
+Manually renewed the certificate using a DNS challenge and updated the load balancer configuration.
+
+Long-term:
+Updated the routing rules to explicitly exclude the ACME challenge path. Added external monitoring to check certificate expiry dates.

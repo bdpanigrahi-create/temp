@@ -1,0 +1,22 @@
+apiVersion: agent.enterprise.google.com/v1alpha1
+kind: AgentPolicy
+metadata:
+  name: self-healing-safeguards
+spec:
+  target_identity: "incident-healer-agent@ide-exp.iam.gserviceaccount.com"
+  enforcement: STRICT_HALT
+  rules:
+    - name: restrict-to-hotfix-prefix
+      action: "github_mcp/git_push_branch"
+      conditions:
+        - field: "arguments.branch_name"
+          operator: STARTS_WITH
+          values: ["hotfix-incident-"]
+          violation_action: "EMERGENCY_HALT_AND_ALERT"
+    - name: restrict-rolling-restarts
+      action: "k8s_mcp/trigger_rolling_restart"
+      conditions:
+        - field: "arguments.namespace"
+          operator: EQUALS
+          values: ["staging", "sandbox"]
+          violation_action: "FORCE_HUMAN_INTERVENTION"

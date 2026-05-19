@@ -1,0 +1,17 @@
+Incident ID: INC-20260501-1
+Title: Catastrophic Regex Backtracking in Log Ingestion
+Date: 2026-05-01
+Severity: CRITICAL
+
+Symptom:
+High CPU usage on log ingestion nodes, leading to a 20-minute lag in log processing and delayed alerts for all services.
+
+Root Cause Analysis (RCA):
+A newly deployed log parser rule designed to handle multiline stack traces contained a nested quantifier (a+)+ style pattern. When processing a specifically malformed log message from a misbehaving service, this triggered catastrophic backtracking, consuming 100% CPU on ingestion workers.
+
+Remediation Steps:
+Short-term:
+Reverted the problematic parser rule and restarted the affected ingestion nodes to clear the CPU spike.
+
+Long-term:
+Implemented a regex static analysis tool in the CI/CD pipeline to detect vulnerable patterns. Added execution timeouts to the regex engine.

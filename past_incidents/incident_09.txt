@@ -1,0 +1,17 @@
+Incident ID: INC-20260517-9
+Title: Message Queue Consumer Livelock
+Date: 2026-05-17
+Severity: HIGH
+
+Symptom:
+Messages in the order processing queue were not being processed, but consumer instances appeared healthy and running.
+
+Root Cause Analysis (RCA):
+A specific malformed message caused an unhandled exception in the consumer. Since the consumer acknowledged messages *after* processing, it crashed before acknowledgment. The message broker redelivered it immediately, causing an infinite loop of crashes and redeliveries (livelock).
+
+Remediation Steps:
+Short-term:
+Identified and manually moved the problematic message to a dead-letter queue.
+
+Long-term:
+Implemented a Dead-Letter Queue (DLQ) for messages that fail processing more than 3 times. Added global exception handling to consumers.

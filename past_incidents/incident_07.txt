@@ -1,0 +1,17 @@
+Incident ID: INC-20260513-7
+Title: DNS Resolution Failure due to Misconfigured DNSSEC
+Date: 2026-05-13
+Severity: CRITICAL
+
+Symptom:
+Widespread failures across all services unable to resolve internal and external domain names.
+
+Root Cause Analysis (RCA):
+An administrator enabled DNSSEC on the primary DNS zone but provided incorrect DS (Delegation Signer) records to the domain registrar. This caused DNS resolvers to fail validation and refuse to resolve the domain.
+
+Remediation Steps:
+Short-term:
+Temporarily disabled DNSSEC at the registrar to restore service quickly.
+
+Long-term:
+Corrected the DS records and verified the configuration with a DNSSEC debugger before re-enabling it.

@@ -1,0 +1,17 @@
+Incident ID: INC-20260515-8
+Title: Redis Cache Eviction Storm causing Database Overload
+Date: 2026-05-15
+Severity: HIGH
+
+Symptom:
+Sudden spike in database load and response latency, leading to degraded performance site-wide.
+
+Root Cause Analysis (RCA):
+The Redis instance reached its memory limit. The eviction policy was set to 'allkeys-lru', and a sudden influx of large session objects caused critical application data to be evicted. This forced the application to fetch data directly from the database, causing a cache stampede.
+
+Remediation Steps:
+Short-term:
+Increased the Redis instance memory size to handle the current load.
+
+Long-term:
+Separated session data and application cache into different Redis instances. Set explicit TTLs for volatile data.

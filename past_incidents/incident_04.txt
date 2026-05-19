@@ -1,0 +1,17 @@
+Incident ID: INC-20260507-4
+Title: Disk Space Exhaustion on Alerting Server due to Uncompressed Logs
+Date: 2026-05-07
+Severity: HIGH
+
+Symptom:
+Alerting server stopped processing incoming events. API calls failed with 'No space left on device' error.
+
+Root Cause Analysis (RCA):
+A engineer enabled DEBUG logging to troubleshoot an issue but forgot to revert it. The log rotation script failed because the logrotate configuration file had a syntax error introduced in a manual edit, preventing compression and deletion of old logs.
+
+Remediation Steps:
+Short-term:
+Manually cleared old uncompressed logs to free space and restarted the alerting service.
+
+Long-term:
+Fixed the logrotate configuration and added a validation step in the deployment pipeline. Configured alerts for disk usage exceeding 80%.

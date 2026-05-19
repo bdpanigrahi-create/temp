@@ -7,6 +7,11 @@ This application is a sample designed to demonstrate a memory leak incident, spe
 -   **`billing_processor/app.py`**: A simple HTTP server (using Python's built-in `http.server`) that simulates a billing microservice.
 -   **`billing_processor/utils/processor.py`**: Contains the processing logic and the unbounded cache that causes the memory leak.
 -   **`trigger_incident.py`**: A script that sends rapid requests to the application to fill the cache and cause memory usage to spike.
+-   **`sre_fleet/`**: Contains the configurations and script for the Autonomous SRE Self-Healer Fleet demo.
+    -   `sandbox_profile.json`: Sandbox policy.
+    -   `remediation_gate_policy.yaml`: Gateway policy.
+    -   `model_armor_config.json`: Model Armor config.
+    -   `execution_incident_healer.py`: Orchestration script.
 
 ## Architecture
 

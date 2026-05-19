@@ -1,0 +1,16 @@
+{
+  "sandbox_id": "sre-diagnostics-sandbox",
+  "runtime_environment": "python-3.11",
+  "resource_limits": {
+    "v_cpu": "2.0",
+    "memory_limit_mb": 2048,
+    "timeout_seconds": 240
+  },
+  "network_configuration": {
+    "egress_routing": "VPC_ONLY",
+    "vpc_connector": "projects/ide-exp/regions/us-central1/connectors/sre-sandbox-vpc",
+    "allow_public_internet": false,
+    "allowed_dns_suffixes": ["internal-registry.corp.com", "github.com"]
+  },
+  "preinstalled_packages": ["pandas", "numpy", "psutil", "memory-profiler"]
+}

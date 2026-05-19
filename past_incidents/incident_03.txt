@@ -1,0 +1,17 @@
+Incident ID: INC-20260505-3
+Title: Database Connection Pool Exhaustion during Traffic Spike
+Date: 2026-05-05
+Severity: HIGH
+
+Symptom:
+Checkout service returning HTTP 500 errors to users. Logs indicated 'Connection pool exhausted' when trying to reach the main database.
+
+Root Cause Analysis (RCA):
+A marketing campaign caused a 5x traffic spike. The checkout service was performing synchronous database queries inside a loop for inventory validation, holding connections significantly longer than necessary and exhausting the pool.
+
+Remediation Steps:
+Short-term:
+Increased the maximum connection pool size and added a read replica to offload non-critical queries.
+
+Long-term:
+Refactored the inventory validation to use a single batch query instead of per-item queries. Implemented circuit breakers for database calls.

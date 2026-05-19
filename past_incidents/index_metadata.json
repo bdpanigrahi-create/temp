@@ -1,0 +1,14 @@
+{
+  "contentsDeltaUri": "gs://past-incidents-996dca47/embeddings/",
+  "config": {
+    "dimensions": 768,
+    "approximateNeighborsCount": 10,
+    "distanceMeasureType": "DOT_PRODUCT_DISTANCE",
+    "algorithmConfig": {
+      "treeAhConfig": {
+        "leafNodeEmbeddingCount": 1000,
+        "leafNodesToSearchPercent": 10
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+Incident ID: INC-20260509-5
+Title: Throttling by Third-Party Payment API due to Retry Storm
+Date: 2026-05-09
+Severity: MEDIUM
+
+Symptom:
+Payment processing failing with 429 Too Many Requests errors from the external payment provider.
+
+Root Cause Analysis (RCA):
+A brief network glitch caused initial payment requests to fail. The retry logic in the payment service was configured for immediate retry without backoff. This caused hundreds of instances to retry simultaneously, creating a retry storm that triggered the provider's rate limits.
+
+Remediation Steps:
+Short-term:
+Paused the payment queue for 5 minutes to allow the rate limit window to reset.
+
+Long-term:
+Implemented exponential backoff with jitter in the retry logic for all external API clients.
