@@ -4,10 +4,15 @@ import urllib.parse
 import json
 import sys
 import os
+from google.cloud import pubsub_v1
 
 # Add the current directory to path so we can import utils
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from utils import processor
+
+publisher = pubsub_v1.PublisherClient()
+topic_id = os.environ.get('billing_logs_topic_TOPIC_ID')
+
 
 PORT = 8080
 
@@ -27,6 +32,18 @@ class BillingHandler(http.server.SimpleHTTPRequestHandler):
             data = "X" * 1024 * 1024 # 1MB
             
             processor.process_transaction(tx_id, data)
+            
+            # Publish log to Pub/Sub
+            if topic_id:
+                try:
+                    log_message = json.dumps({
+                        'event': 'transaction_processed',
+                        'tx_id': tx_id,
+                        'cache_size': processor.get_cache_size()
+                    })
+                    publisher.publish(topic_id, log_message.encode('utf-8'))
+                except Exception as e:
+                    print(f"Failed to publish to Pub/Sub: {e}")
             
             self.send_response(200)
             self.send_header('Content-type', 'text/plain')
